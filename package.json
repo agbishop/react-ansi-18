@@ -25,6 +25,19 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agbishop/react-ansi-18.git"
+  },
+  "bugs": {
+    "url": "https://github.com/agbishop/react-ansi-18/issues"
+  },
+  "homepage": "https://github.com/agbishop/react-ansi-18e#readme",
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
       "prettier --write"
