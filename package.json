@@ -1,10 +1,10 @@
 {
-  "name": "react-ansi",
+  "name": "@agbishop/react-ansi-18",
   "version": "3.0.2",
   "description": "",
-  "author": "RaoHai",
+  "author": "agbishop",
   "license": "MIT",
-  "repository": "RaoHai/react-ansi",
+  "repository": "agbishop/react-ansi-18",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "engines": {
@@ -40,8 +40,8 @@
     "react-virtualized": "^9.22.3"
   },
   "peerDependencies": {
-    "react": "^15.0.0 || ^16.0.0 || ^17.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0 || ^17.0.0"
+    "react": "^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
   },
   "files": [
     "dist",
