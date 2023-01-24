@@ -1,6 +1,6 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import ReactAnsi from '..';
+import React from "react";
+import { render } from "@testing-library/react";
+import ReactAnsi from "..";
 
 const log = `
   +travis_fold:start:worker_info
@@ -12,13 +12,13 @@ const log = `
   travis_fold:end:worker_info
 `;
 
-describe('react-ansi', () => {
-  it('should render', () => {
+describe("react-ansi", () => {
+  it("should render", () => {
     const wrapper = render(<ReactAnsi log={log} />);
     expect(wrapper);
   });
 
-  it('should render virtual', () => {
+  it("should render virtual", () => {
     const wrapper = render(<ReactAnsi log={log} virtual />);
     expect(wrapper);
   });

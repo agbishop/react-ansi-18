@@ -1,11 +1,11 @@
-import React, { useState, ReactNode, useEffect, useContext, useLayoutEffect } from 'react';
-import Anser, { AnserJsonEntry } from 'anser';
-import { escapeCarriageReturn } from 'escape-carriage';
-import { Partical } from '../matcher';
-import { ErrorMatcher, ErrorMatcherPattern } from '../errorMatcher';
+import React, { ReactNode, useContext, useEffect, useState } from "react";
+import Anser, { AnserJsonEntry } from "anser";
+import { escapeCarriageReturn } from "escape-carriage";
+import { Partical } from "../matcher";
+import { ErrorMatcher, ErrorMatcherPattern } from "../errorMatcher";
 
-import styles from '../style/log.module.less';
-import { ErrorContext } from '../model/ErrorContext';
+import { ErrorContext } from "../model/ErrorContext";
+import styled from "@emotion/styled";
 
 export interface RawLoggerProps {
   partical: Partical;
@@ -28,16 +28,16 @@ const LINK_REGEX =
  * @return {String} class name(s)
  */
 function createClass(bundle: AnserJsonEntry) {
-  let classNames: string = '';
+  let classNames: string = "";
 
   if (!bundle.bg && !bundle.fg) {
-    return '';
+    return "";
   }
   if (bundle.bg) {
-    classNames += bundle.bg + ' ';
+    classNames += bundle.bg + " ";
   }
   if (bundle.fg) {
-    classNames += bundle.fg + ' ';
+    classNames += bundle.fg + " ";
   }
 
   classNames = classNames.substring(0, classNames.length - 1);
@@ -80,10 +80,10 @@ function convertBundleIntoReact(
   useClasses: boolean,
   linkify: boolean,
   bundle: AnserJsonEntry,
-  key: number,
+  key: number
 ) {
   const style = useClasses ? null : createStyle(bundle);
-  const className = useClasses ? createClass(bundle) : '';
+  const className = useClasses ? createClass(bundle) : "";
 
   let content: ReactNode[] | string = bundle.content;
   if (linkify) {
@@ -103,11 +103,16 @@ function convertBundleIntoReact(
       words.push(
         <>
           {word.substring(0, matches.index)}
-          <a key={index} href={matchedUrl} target="_blank" rel="noopener noreferer">
+          <a
+            key={index}
+            href={matchedUrl}
+            target="_blank"
+            rel="noopener noreferer"
+          >
             {matchedUrl}
           </a>
           {word.substring(matches.index + matchedUrl.length)}
-        </>,
+        </>
       );
 
       return words;
@@ -142,7 +147,12 @@ export function RawLogger({
   const line = React.useMemo(() => {
     return ansiToJSON(partical.content).reduce(
       (prev, bundle, index) => {
-        const content = convertBundleIntoReact(useClasses, linkify, bundle, index);
+        const content = convertBundleIntoReact(
+          useClasses,
+          linkify,
+          bundle,
+          index
+        );
         const errors = errorMatcher.match(bundle);
         return {
           content: prev.content.concat([content]),
@@ -151,23 +161,24 @@ export function RawLogger({
       },
       {
         content: [] as any,
-        errors: [] as ErrorMatcher['patterns'],
-      },
+        errors: [] as ErrorMatcher["patterns"],
+      }
     );
-  }, [partical, styles, useClasses, linkify, errorMatcher]);
+  }, [partical, useClasses, linkify, errorMatcher]);
 
   if (foldable) {
     return (
-      <div className={fold ? styles.fold : styles.foldOpen} ref={forwardRef} style={style}>
-        <div
+      <FoldLineDiv fold={fold} ref={forwardRef} style={style}>
+        <FoldLineLogLineDiv
           key={`folder-placeholder-${index}`}
-          className={styles.foldLine}
           onClick={() => setFold(!fold)}
         >
           {partical.label
-            ? ansiToJSON(partical.label).map(convertBundleIntoReact.bind(null, useClasses, linkify))
+            ? ansiToJSON(partical.label).map(
+                convertBundleIntoReact.bind(null, useClasses, linkify)
+              )
             : null}
-        </div>
+        </FoldLineLogLineDiv>
         <Line
           {...lineProps}
           line={line.content}
@@ -175,7 +186,7 @@ export function RawLogger({
           index={index}
           saveRef={setErrorRefs}
         />
-      </div>
+      </FoldLineDiv>
     );
   }
 
@@ -199,7 +210,7 @@ export function Line({
   saveRef,
 }: {
   line: string;
-  errors: ErrorMatcher['patterns'];
+  errors: ErrorMatcher["patterns"];
   index: number;
   saveRef: (errors: ErrorMatcherPattern[], ref: HTMLDivElement) => void;
 }) {
@@ -212,15 +223,82 @@ export function Line({
   }, [ref.current, errors]);
 
   return (
-    <div className={`${styles.logLine} ${errors.length ? styles.error : ''}`} key={index} ref={ref}>
-      <a className={styles.lineNo} key={`lineNo-${index}`}>
-        {index}
-      </a>
+    <LogLineDiv error={errors.length > 0} key={`${index}-line-wrap`} ref={ref}>
+      <LineNoLink key={`lineNo-${index}`}>{index}</LineNoLink>
       {line}
-    </div>
+    </LogLineDiv>
   );
 }
 
-export default React.forwardRef((props: RawLoggerProps, ref: React.ForwardedRef<any>) => (
-  <RawLogger {...props} forwardRef={ref} />
-));
+const FoldLineLogLineDiv = styled.div`
+  color: #ffff91;
+  cursor: pointer;
+
+  &::before {
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    width: 10px;
+    height: 10px;
+    background: url("../media/arrow.svg") 8px 3px no-repeat #2b2b2b;
+    background-position: center;
+    transition: transform cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.3s;
+    content: " ";
+  }
+`;
+
+interface FoldLineDivProps {
+  fold: boolean;
+}
+
+const FoldLineDiv = styled.div<FoldLineDivProps>`
+  ${(props) =>
+    props.fold
+      ? `
+     height: auto;
+     &:before: {
+        transform: rotate(90deg);
+     }
+    `
+      : `
+    position: relative;
+    height: 19px;
+    overflow: hidden;
+    cursor: pointer;
+    `}
+`;
+
+const LineNoLink = styled.a`
+  position: absolute;
+  display: inline-block;
+  min-width: 40px;
+  margin-left: calc(-40px - 1em);
+  padding-right: 1em;
+  color: #666;
+  text-align: right;
+  text-decoration: none;
+  cursor: pointer;
+`;
+
+interface LogLineDivProps {
+  error: boolean;
+}
+
+const LogLineDiv = styled.div<LogLineDivProps>`
+  position: relative;
+  min-height: 19px;
+  margin: 0;
+  padding: 0 15px 0 62px;
+
+  &:hover,
+  &:hover::before {
+    background-color: #444 !important;
+  }
+
+  color: ${(props) => props.error && "#f97583"};
+`;
+export default React.forwardRef(
+  (props: RawLoggerProps, ref: React.ForwardedRef<any>) => (
+    <RawLogger {...props} forwardRef={ref} />
+  )
+);

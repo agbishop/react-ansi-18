@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from "react";
 import {
   AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
   List,
   ListRowRenderer,
-} from 'react-virtualized';
-import { Partical } from '../matcher';
-import RawLogger from './RawLogger';
-import { ErrorMatcher } from '../errorMatcher';
+} from "react-virtualized";
+import { Partical } from "../matcher";
+import RawLogger from "./RawLogger";
+import { ErrorMatcher } from "../errorMatcher";
 
-import styles from '../style/log.module.less';
+import styled from "@emotion/styled";
 
 export interface LogContent {
   virtual?: boolean;
@@ -47,7 +47,7 @@ export function VirtualLogContent({
           <RawLogger
             partical={partical}
             key={`logger-line-${index}`}
-            foldable={partical.type === 'partical'}
+            foldable={partical.type === "partical"}
             index={index}
             linkify={linkify}
             errorMatcher={errorMatcher}
@@ -56,11 +56,11 @@ export function VirtualLogContent({
         </CellMeasurer>
       );
     },
-    [particals, linkify, errorMatcher],
+    [particals, linkify, errorMatcher]
   );
 
   return (
-    <pre id="log" className={styles.ansi} style={style}>
+    <AnsiLogLine id="log" style={style}>
       <AutoSizer>
         {({ width, height }) => (
           <List
@@ -71,22 +71,27 @@ export function VirtualLogContent({
             deferredMeasurementCache={measurementCache}
             rowHeight={measurementCache.rowHeight}
             overscanRowCount={10}
-            scrollToAlignment={autoScroll ? 'end' : 'auto'}
+            scrollToAlignment={autoScroll ? "end" : "auto"}
           />
         )}
       </AutoSizer>
-    </pre>
+    </AnsiLogLine>
   );
 }
 
-export function ClassicLogContent({ particals, style, linkify, errorMatcher }: LogContent) {
+export function ClassicLogContent({
+  particals,
+  style,
+  linkify,
+  errorMatcher,
+}: LogContent) {
   return (
-    <pre id="log" className={styles.ansi} style={style}>
+    <AnsiLogLine id="log" style={style}>
       {particals.map((partical, index) => {
         return (
           <RawLogger
             key={`logger-line-${index}`}
-            foldable={partical.type === 'partical'}
+            foldable={partical.type === "partical"}
             partical={partical}
             index={index}
             linkify={linkify}
@@ -94,9 +99,23 @@ export function ClassicLogContent({ particals, style, linkify, errorMatcher }: L
           />
         );
       })}
-    </pre>
+    </AnsiLogLine>
   );
 }
+
+const AnsiLogLine = styled.pre`
+  min-height: 42px;
+  margin-top: 0;
+  margin-bottom: -45px;
+  padding: 15px 0 2em 0;
+  color: #f1f1f1;
+  font-size: 1em;
+  font-family: "RobotoMono", Monaco, "Courier New", monospace;
+  line-height: 1.58;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  counter-reset: line-numbering;
+`;
 
 export default function LogContent(props: LogContent) {
   if (props.virtual) {

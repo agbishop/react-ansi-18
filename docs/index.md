@@ -1,11 +1,11 @@
 ---
 hero:
-  title: 🖥️ React Ansi
-  desc: A foldable and searchable ansi log viewer for React.
-  actions:
-    - text: Getting Started
-      link: /usage
-footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](https://d.umijs.org)
+title: 🖥️ React Ansi
+desc: A foldable and searchable ansi log viewer for React.
+actions:
+  - text: Getting Started
+    link: /usage
+    footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](https://d.umijs.org)
 ---
 
 ![log](https://user-images.githubusercontent.com/566097/67918532-b1245700-fbd7-11e9-9e9b-ed129b49d377.gif)
