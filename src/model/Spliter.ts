@@ -1,9 +1,10 @@
-import { Matcher, Partical } from "../matcher";
+import { Matcher, Partical } from "../utils/matcher";
 
 export const washRegExp = "\x1b?[[0-9;]+[a-zA-Z]";
 
 export class Spliter {
   public matchers: Matcher[];
+
   constructor(matchers: Matcher[]) {
     this.matchers = matchers;
   }
@@ -21,11 +22,11 @@ export class Spliter {
     let lastIndex = 0;
     const particals: Partical[] = [];
     this.matchers = defaultMatchers;
-    console.log(defaultMatchers[0]);
     for (let i = 0; i < this.matchers.length; i++) {
       const { regexStart, regexEnd, label, matcherOptions } = this.matchers[i];
       regexStart.lastIndex = lastIndex;
       regexEnd.lastIndex = lastIndex;
+
       const startMatch = regexStart.exec(log);
       if (!startMatch) {
         continue;

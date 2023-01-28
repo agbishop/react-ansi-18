@@ -1,4 +1,4 @@
-import { ErrorMatcherPattern } from "../errorMatcher";
+import { ErrorMatcherPattern } from "../utils/errorMatcher";
 import { createContext } from "react";
 
 const errorRefs = new Map<HTMLDivElement, ErrorMatcherPattern[]>();

@@ -326,7 +326,7 @@ travis_fold:start:install.npm
 > rollup -c
 
 
-src/index.tsx → dist/index.js, dist/index.es.js...
+src/index.ts → dist/index.js, dist/index.es.js...
 created dist/index.js, dist/index.es.js in 4.6s
 npm notice created a lockfile as package-lock.json. You should commit this file.
 npm WARN extract-text-webpack-plugin@3.0.2 requires a peer of webpack@^3.1.0 but none is installed. You must install peer dependencies yourself.
@@ -366,7 +366,7 @@ Ran all test suites.
 > rollup -c
 
 
-src/index.tsx → dist/index.js, dist/index.es.js...
+src/index.ts → dist/index.js, dist/index.es.js...
 created dist/index.js, dist/index.es.js in 4.5s
 travis_time:end:09e495c0:start=1572495336891949060,finish=1572495347552622279,duration=10660673219,event=script
 [0K[32;1mThe command "npm run test && npm run build" exited with 0.[0m
