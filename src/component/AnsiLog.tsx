@@ -73,9 +73,6 @@ const useStyles = makeStyles<{ error: boolean }>()((_theme, { error }) => ({
 
 export interface AnsiLogProps {
   log: string | string[];
-  style?: React.CSSProperties;
-  bodyStyle?: React.CSSProperties;
-  logStyle?: React.CSSProperties;
   matchers?: Matcher[];
   errorMatchers?: ErrorMatcherPatterns;
   autoScroll?: boolean;
