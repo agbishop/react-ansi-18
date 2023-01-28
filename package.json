@@ -10,15 +10,12 @@
   },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "engines": {
-    "node": ">=8",
-    "npm": ">=5"
-  },
   "moduleFileExtensions": [
     "ts",
     "js"
   ],
   "scripts": {
+    "start": "dumi dev",
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
@@ -27,7 +24,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "prepublishOnly": "npm run build",
-    "storybook": "start- -p 6006",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "gitHooks": {
@@ -61,8 +58,8 @@
     "tss-react": "^4.5.2"
   },
   "peerDependencies": {
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "files": [
     "dist",
