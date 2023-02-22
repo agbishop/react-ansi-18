@@ -26,8 +26,6 @@ export { Matcher, ErrorContext, errorRefs };
 
 const useStyles = makeStyles<{ error: boolean }>()((_theme, { error }) => ({
   logMain: {
-    overflow: "auto",
-    width: "100%",
     display: "block",
     paddingRight: `${error && "240px"}`,
   },
@@ -166,7 +164,8 @@ const AnsiLog: React.FC<AnsiLogProps> = (props) => {
   const virtualizer = useVirtualizer({
     count: foldedLogger.length,
     getScrollElement: () => bodyRef.current,
-    estimateSize: () => 15,
+    estimateSize: () => 20,
+    overscan: 5,
   });
   const { classes, cx } = useStyles({ error: errors.size > 0 });
   const items = virtualizer.getVirtualItems();

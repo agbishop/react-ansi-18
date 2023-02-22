@@ -5,4 +5,9 @@ module.exports = {
   // from the above list
   preset: "ts-jest",
   testEnvironment: "jsdom",
+  rootDir: "src",
+  transform: {
+    "^.+\\.(ts|tsx)?$": "ts-jest",
+    "^.+\\.(js|jsx)$": "babel-jest",
+  },
 };
