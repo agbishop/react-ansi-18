@@ -1,6 +1,6 @@
 {
   "name": "@agbishop/react-ansi-18",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "",
   "author": "agbishop",
   "license": "MIT",
@@ -8,6 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/agbishop/react-ansi-18.git"
   },
+  "type": "module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "moduleFileExtensions": [
