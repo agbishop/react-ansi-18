@@ -1,3 +1,3 @@
 import AnsiLog from "./component/AnsiLog";
 
-export { AnsiLog };
+export default AnsiLog;
